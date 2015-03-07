@@ -1,8 +1,59 @@
 ﻿.selected-row {
     background-color: rgba(0, 0, 139, 0.2);
     /*opacity: 0.5;*/
- }
-.selected-row td {
-    color: black;
-    opacity: 1;
+}
+
+    .selected-row td {
+        color: black;
+        opacity: 1;
+    }
+
+.overlay-window {
+    display: none;
+    position: absolute;
+    height: 155%;
+    width: 100%;
+    margin-left: -15px;
+    margin-top: -60px;
+    opacity: 0.5;
+    background: #000000;
+    z-index: 22;
+    
+}
+
+.novo-license-window {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 30em;
+    height: 22em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+    z-index: 24;
+}
+
+.btns-window {
+    margin-top: 1em;
+    margin-left: 10.4em;
+}
+
+.btn-novo {
+    margin: 15px;
+}
+
+.close-icon {
+    margin: 0px;
+    margin-left: 14.46em;
+    font-size: 1.26em;
+}
+
+    .close-icon:hover {
+        cursor: pointer;
+        color: red;
+    }
+
+.window-title {
+    font-weight: 600;
+    font-size: 1.3em;
 }

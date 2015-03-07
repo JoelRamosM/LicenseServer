@@ -4,27 +4,61 @@
     ViewBag.Title = "Licenses";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="page-header"><h2>Licenses</h2></div>
-<div class="panel panel-default license-panel">
-    <!-- Default panel contents -->
-    <div class="panel-heading">Licenses</div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Produto</th>
-                <th>Empresa</th>
-                <th>AppKey</th>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: Licenses">
-            <tr data-bind="with:$data, click:$data.onSelect, css:{'selected-row': selected}">
-                <td data-bind="text:Produto"></td>
-                <td data-bind="text:Empresa"></td>
-                <td data-bind="text:AppKey"></td>
-            </tr>
-        </tbody>
-    </table>
+<div class="license-panel">
+    <div class="overlay-window" data-bind="style:{display: showNovo() ? 'inline-block':'none'}"></div>
+    <div class="page-header"><h2>Licenses</h2></div>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Licenses</div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Empresa</th>
+                    <th>AppKey</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: Licenses">
+                <tr data-bind="with:$data, click:$data.onSelect, css:{'selected-row': selected}">
+                    <td data-bind="text:Produto"></td>
+                    <td data-bind="text:Empresa"></td>
+                    <td data-bind="text:AppKey"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="btn-group btn-novo">
+            <button class="btn-lg btn " data-bind="click:onNovo"><span class="glyphicon glyphicon-ok-sign"></span> Novo</button>
+        </div>
+        <div class="panel panel-default novo-license-window" data-bind="with:novaLicense,style:{display: showNovo() ? 'inline-block':'none'}">
+            <div class="panel-heading ">
+                <div>
+                    <span class="window-title"> New License</span>
+                    <span class="glyphicon glyphicon-remove close-icon" data-bind="click:$root.closeNovo"></span>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon "><span class="glyphicon glyphicon-asterisk"></span></span>
+                    <input type="text" class="form-control" placeholder="Empresa" aria-describedby="input-empresa">
+                </div>
+                <br />
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    <input type="text" class="form-control" placeholder="Produto" aria-describedby="input-produto">
+                </div>
+                <br />
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    <input type="text" class="form-control" id="dt-val" placeholder="Validade" aria-describedby="input-validade">
+                </div>
+                <span class="clearfix "></span>
+                <div class="btns-window">
+                    <button class="btn-lg btn"><span class="glyphicon glyphicon-ok-sign"></span> Salvar</button>
+                    <button class="btn-lg btn" data-bind="click:$root.closeNovo"><span class="glyphicon glyphicon-remove-sign"></span> Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
     $(function () {
@@ -32,5 +66,13 @@
         var viewModel = new LicensesViewModel();
         ko.applyBindings(viewModel, panel);
         viewModel.getLicenses();
+
+        $('#dt-val').datepicker({
+            format: "dd/mm/yyyy",
+            language: "pt-BR",
+            orientation: "top bottom",
+            autoclose: true,
+            todayHighlight: true
+        });
     })
 </script>
