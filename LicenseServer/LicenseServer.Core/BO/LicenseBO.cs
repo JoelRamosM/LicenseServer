@@ -18,7 +18,7 @@ namespace LicenseServer.Core.BO
         {
             var licensa = todasLicencas.FindByAppKey(appKey);
             if (licensa == null) throw new Exception("Licensa não encontrada");
-            return licensa.Validade.Date <= DateTime.Today;
+            return licensa.Validade.Date >= DateTime.Today;
         }
     }
 }

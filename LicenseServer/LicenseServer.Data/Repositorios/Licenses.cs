@@ -1,20 +1,31 @@
-﻿using LicenseServer.Core.Interfaces;
+﻿using System;
+using LicenseServer.Core;
+using LicenseServer.Core.Interfaces;
 using LicenseServer.Core.Modelos;
 using LicenseServer.Data.Repositorios.Commom;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 
 namespace LicenseServer.Data.Repositorios
 {
     public class Licenses : RepositoryBase<License>, ILicenses
     {
-        public Licenses(MongoDatabase dataBase)
-            : base(dataBase)
+        public Licenses(ConnStr connStr)
+            : base(connStr)
         {
         }
 
         public License FindByAppKey(string appkey)
         {
-            throw new System.NotImplementedException();
+            var query = Query.EQ("AppKey", appkey);
+            return collection.FindOne(query);
+        }
+
+        public License Include(License entidade)
+        {
+            entidade.AppKey = Guid.NewGuid().ToString();
+            entidade.Criacao = DateTime.Now;
+            return base.Include(entidade);
         }
     }
 }

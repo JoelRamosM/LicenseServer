@@ -7,6 +7,7 @@ using System.Web.Http.Results;
 using LicenseServer.Core.Interfaces;
 using LicenseServer.Core.Interfaces.BO;
 using LicenseServer.Core.Modelos;
+using MongoDB.Driver.Linq;
 using Newtonsoft.Json;
 
 
@@ -24,7 +25,7 @@ namespace LicnseServer.WebApi.Controllers
         }
 
         [HttpGet]
-        public JsonResult<object> Index()
+        public JsonResult<object> Eco()
         {
             return new JsonResult<object>(new { Teste = "Echo", Teste2 = "Eco 2" }, new JsonSerializerSettings(), Encoding.UTF8, this);
         }
@@ -46,13 +47,14 @@ namespace LicnseServer.WebApi.Controllers
             }
         }
 
-        [HttpGet]
-        public JsonResult<object> IncluirLicense()
+        [HttpPost]
+        public JsonResult<object> IncluirLicense([FromBody]License license)
         {
             try
             {
-                //todasLicenses.Include(new License() { AppKey = Guid.NewGuid().ToString(), Criacao = DateTime.Today, Empresa = "Testando API", Validade = DateTime.Today.AddDays(5), Produto = "Gestao Gas" });
-                return new JsonResult<object>(new { Teste = "Echo", Teste2 = "Eco 2" }, new JsonSerializerSettings(), Encoding.UTF8, this);
+                //var licensa = todasLicenses.Include(new License() { AppKey = Guid.NewGuid().ToString(), Criacao = DateTime.Today, Empresa = "Testando API", Validade = DateTime.Today.AddDays(5), Produto = "Gestao Gas" });
+                var licensa = todasLicenses.Include(license);
+                return new JsonResult<object>(licensa, new JsonSerializerSettings(), Encoding.UTF8, this);
 
             }
             catch (Exception e)

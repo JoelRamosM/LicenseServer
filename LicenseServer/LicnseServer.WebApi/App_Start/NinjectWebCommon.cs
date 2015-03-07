@@ -1,8 +1,12 @@
 ﻿using System.Configuration;
+using System.Drawing;
 using System.Web.Http;
+using LicenseServer.Core;
 using LicenseServer.Core.BO;
+using LicenseServer.Core.Interfaces;
 using LicenseServer.Core.Interfaces.BO;
 using LicenseServer.Data.Repositorios;
+using LicenseServer.Data.Repositorios.Commom;
 using MongoDB.Driver;
 using Ninject.Extensions.Conventions;
 
@@ -74,20 +78,12 @@ namespace LicnseServer.WebApi.App_Start
             kernel.Bind(config => config.FromAssemblyContaining<Licenses>().SelectAllClasses().BindDefaultInterfaces().Configure(x => x.InRequestScope()));
             kernel.Bind(config => config.FromAssemblyContaining<LicenseBO>().SelectAllClasses().BindDefaultInterfaces().Configure(x => x.InRequestScope()));
 
-            kernel.Bind<MongoServer>().ToMethod((x) =>
-            {
-                // Create server settings to pass connection string, timeout, etc
-                var settings = new MongoServerSettings();
-                settings.Server = new MongoServerAddress(CONNSTR);
-                // Create server object to communicate with our server
-                var server = new MongoServer(settings);
-                return server;
-            }).InRequestScope();
-            kernel.Bind<MongoDatabase>().ToMethod((x) =>
-            {
-                var server = x.Kernel.Get<MongoServer>();
-                return server.GetDatabase("Licenses");
-            }).InRequestScope();
+            kernel.Bind<ConnStr>()
+                .ToMethod(x => new ConnStr { ConnectionString = CONNSTR })
+                .InSingletonScope();
         }
+
+
     }
+
 }
