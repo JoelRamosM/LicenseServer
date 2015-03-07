@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -7,11 +8,9 @@ using System.Web.Http.Results;
 using LicenseServer.Core.Interfaces;
 using LicenseServer.Core.Interfaces.BO;
 using LicenseServer.Core.Modelos;
-using MongoDB.Driver.Linq;
 using Newtonsoft.Json;
 
-
-namespace LicnseServer.WebApi.Controllers
+namespace LicnseServer.WebApi.Controllers.Api
 {
     public class LicenseController : ApiController
     {
@@ -62,6 +61,12 @@ namespace LicnseServer.WebApi.Controllers
                 ResponseMessage(new HttpResponseMessage(HttpStatusCode.BadRequest));
                 return new JsonResult<object>(new { Auth = false, Message = e.Message }, new JsonSerializerSettings(), Encoding.UTF8, this);
             }
+        }
+
+        [HttpGet]
+        public IEnumerable<License> Inicio()
+        {
+            return todasLicenses.All();
         }
     }
 }

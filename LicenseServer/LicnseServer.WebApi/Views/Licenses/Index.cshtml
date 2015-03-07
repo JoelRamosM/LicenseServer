@@ -1,0 +1,36 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Licenses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header"><h2>Licenses</h2></div>
+<div class="panel panel-default license-panel">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Licenses</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Empresa</th>
+                <th>AppKey</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: Licenses">
+            <tr data-bind="with:$data, click:$data.onSelect, css:{'selected-row': selected}">
+                <td data-bind="text:Produto"></td>
+                <td data-bind="text:Empresa"></td>
+                <td data-bind="text:AppKey"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var panel = $('.license-panel')[0];
+        var viewModel = new LicensesViewModel();
+        ko.applyBindings(viewModel, panel);
+        viewModel.getLicenses();
+    })
+</script>

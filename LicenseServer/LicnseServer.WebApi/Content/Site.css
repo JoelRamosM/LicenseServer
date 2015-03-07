@@ -1,0 +1,8 @@
+﻿.selected-row {
+    background-color: rgba(0, 0, 139, 0.2);
+    /*opacity: 0.5;*/
+ }
+.selected-row td {
+    color: black;
+    opacity: 1;
+}
